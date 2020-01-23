@@ -75,7 +75,7 @@ class Article
 
   /**
    * Méthode statique de chargement d'un article précis.
-   * Cette méthode peut être appellée sans que la carte Article ne soit
+   * Cette méthode peut être appellée sans que la classe Article ne soit
    * instanciée. ex: $mon_article = Article::charger(4);
    *
    * @return Article ou NULL
@@ -104,7 +104,7 @@ class Article
    *
    * @return Article[]
    */
-  public static function chargerPlusieurs(int $debut = 0, int $limit = 10):array
+  static public function chargerPlusieurs(int $debut = 0, int $limit = 10):array
   {
     $articles = [];
     //Création d'une instance PDO.
