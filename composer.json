@@ -1,0 +1,15 @@
+{
+    "name": "wf3/jeu",
+    "authors": [
+        {
+            "name": "Nicolas Perdereau",
+            "email": "nicolasperdereau@hotmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Wf3\\": "class/"
+        }
+    },
+    "require": {}
+}
