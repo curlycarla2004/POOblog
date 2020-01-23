@@ -11,9 +11,6 @@ class Article
   protected $id = '';
   protected $titre = '';
   protected $corps = '';
-  protected $auteur_id = '';
-  protected $date = '';
-  protected $img_url = '';
 
   /**
    * COnstructeur de la classe Article.
@@ -37,18 +34,6 @@ class Article
 
   public function getCorps():string{
     return $this->corps;
-  }
-
-  public function getDate():string{
-    return $this->date;
-  }
-
-  public function getAuteurId():string{
-    return $this->auteur_id;
-  }
-
-  public function getImgUrl():string{
-    return $this->img_url;
   }
 
   public function hydrater(array $data)
@@ -99,7 +84,7 @@ class Article
   {
     //Création d'une instance PDO.
     $dbh = DB::connect();
-    $query = 'SELECT * FROM article WHERE article.id = :article_id';
+    $query = 'SELECT id, titre, corps FROM article WHERE article.id = :article_id';
     $req = $dbh->prepare($query);
     $params = [
       'article_id' => $id
@@ -125,7 +110,7 @@ class Article
     //Création d'une instance PDO.
     $dbh = DB::connect();
 
-    $query = 'SELECT * FROM article
+    $query = 'SELECT id, titre, corps FROM article
     LIMIT :debut, :fin';
 
     $req = $dbh->prepare($query);
