@@ -12,6 +12,7 @@ class Article
   protected $titre = '';
   protected $corps = '';
   protected $auteur = '';
+  protected $tags = [];
 
   /**
    * COnstructeur de la classe Article.
@@ -40,6 +41,10 @@ class Article
 
   public function getAuteur():Auteur {
     return $this->auteur;
+  }
+
+  public function getTags():array {
+    return $this->tags;
   }
 
   public function hydrater(array $data)
@@ -134,8 +139,28 @@ class Article
         $auteur = Auteur::charger($value['auteur_id']);
       }
       $article->auteur = $auteur;
+      $article->tags = Tag::chargerPourArticle($value['id']);
       $articles[] = $article;
     }
     return $articles;
+  }
+
+  /**
+   * Retour html pour un rendu des différents tags d'un article.
+   *
+   * @return string
+   */
+  public function afficherTags():string
+  {
+    $output = '';
+    if($this->getTags()){
+      $output = '<span class="badge badge-warning">';
+      foreach ($this->getTags() as $tag) {
+        $output .= $tag->getNom().' ';
+      }
+      $output .= '</span>';
+    }
+    return $output;
+
   }
 }

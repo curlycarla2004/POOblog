@@ -21,7 +21,7 @@
     </div>
     <div class="d-flex">
       <h6 class="text-muted pr-4"><i class="fa fa-user pr-2" aria-hidden="true"></i><?php echo $article->getAuteur()->afficher(); ?></h6>
-      <h6 class="text-muted"><i class="fa fa-calendar pr-2" aria-hidden="true"></i>TODO</h6>
+      <h6 class="text-muted"><?php echo $article->afficherTags();?></h6>
     </div>
   </footer>
 </article>
