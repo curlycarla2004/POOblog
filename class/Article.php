@@ -11,6 +11,7 @@ class Article
   protected $id = '';
   protected $titre = '';
   protected $corps = '';
+  protected $auteur = '';
 
   /**
    * COnstructeur de la classe Article.
@@ -22,6 +23,7 @@ class Article
     if (!empty($params)) {
       $this->hydrater($params);
     }
+    $this->auteur = new Auteur();
   }
 
   public function getId():string{
@@ -34,6 +36,10 @@ class Article
 
   public function getCorps():string{
     return $this->corps;
+  }
+
+  public function getAuteur():Auteur {
+    return $this->auteur;
   }
 
   public function hydrater(array $data)
@@ -84,7 +90,7 @@ class Article
   {
     //Création d'une instance PDO.
     $dbh = DB::connect();
-    $query = 'SELECT id, titre, corps FROM article WHERE article.id = :article_id';
+    $query = 'SELECT id, titre, corps, auteur_id FROM article WHERE article.id = :article_id';
     $req = $dbh->prepare($query);
     $params = [
       'article_id' => $id
@@ -94,7 +100,11 @@ class Article
 
     $data = $req->fetch(\PDO::FETCH_ASSOC);
     if (!empty($data)) {
-      return new Article($data);
+      $article = new Article($data);
+      if(!empty($data['auteur_id'])){
+        $article->auteur = Auteur::charger($data['auteur_id']);
+      }
+      return $article;
     } else
       return NULL;
   }
@@ -110,7 +120,7 @@ class Article
     //Création d'une instance PDO.
     $dbh = DB::connect();
 
-    $query = 'SELECT id, titre, corps FROM article
+    $query = 'SELECT id, titre, corps, auteur_id FROM article
     LIMIT :debut, :fin';
 
     $req = $dbh->prepare($query);
@@ -119,7 +129,12 @@ class Article
     $req->execute();
     $results = $req->fetchAll(\PDO::FETCH_ASSOC);
     foreach ($results as $value) {
-      $articles[] = new Article($value);
+      $article = new Article($value);
+      if (!empty($value['auteur_id'])) {
+        $auteur = Auteur::charger($value['auteur_id']);
+      }
+      $article->auteur = $auteur;
+      $articles[] = $article;
     }
     return $articles;
   }

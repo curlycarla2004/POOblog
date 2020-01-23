@@ -46,6 +46,10 @@ class Auteur{
     }
   }
 
+  public function afficher(){
+    return '<span class="badge badge-primary">'.$this->getPrenom().' '.$this->getNom().'</span>';
+  }
+
   /**
    * Enregistrement d'un auteur en base de données.
    */
